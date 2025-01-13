@@ -7,6 +7,11 @@ int main() {
     int m, n;
     std::cin >> m;  // number of roads
     std::cin >> n;  // number of operation
+    if(m < 0 || n < 0)
+	{
+		std::cout << "invalid input" << std::endl;
+		return 0;
+	}
 	RoadManager roadSystem(m);
 
     for (int i = 0; i < n; ++i) {
@@ -20,18 +25,31 @@ int main() {
             float h;
             int r;
             std::cin >> h >> r;
-			roadSystem.AddBridge(h, r);
+			if ((r > 1 && r <= m) && h > 0)
+			      roadSystem.AddBridge(h, r-1);
+            else {
+                std::cout << "invalid input" << std::endl;
+                return 0;
+            }
         }
         else if (op == 'c') {
-            float height;
-            std::cin >> height;
-            int result = roadSystem.WhichRoad(height);
-            std::cout << result << std::endl;
+			if (m == 0)
+			{
+				std::cout << "0" << std::endl;
+				continue;
+			}
+            else {
+                float height;
+                std::cin >> height;
+                int result = roadSystem.WhichRoad(height);
+                std::cout << result << std::endl;
+            }
         }
         else if (op == 'd') {
             int r;
             std::cin >> r;
-			roadSystem.Print(r);
+			if (r > 1 && r <= m)
+			  roadSystem.Print(r-1);
         }
     }
 

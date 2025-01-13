@@ -76,45 +76,10 @@ void Heap::FixHeap(int node) // Fixes the heap that has node as root.
 
     // Swap values if necessary, and continue fixing the heap towards the leaves.
     if (max != node) {
-	    dataTemp = data[node];
-		data[node] = data[max];
-		data[max] = dataTemp;
-        FixHeap(max);
+		std::swap(data[node], data[max]);
+		FixHeap(max);
     }
 }
 
 
-
-
-
-void Heap::Update(int node) {
-    int left = Left(node);
-    int right = Right(node);
-    int parent = Parent(node);
-
-    Road dataTemp;
-    // Check if the parent index is valid
-    if (parent >= 0) {
-        while (parent >= 0) {
-            // Check if the node has a higher priority or equal priority but higher subpriority
-            if (((data[node].priority_minRoadHeight > data[parent].priority_minRoadHeight) ||
-                (data[node].priority_minRoadHeight == data[parent].priority_minRoadHeight &&
-                    data[node].subPriority_numOfBridges < data[parent].subPriority_numOfBridges)) &&
-                data[parent].haveBridges) {
-                dataTemp = data[node];
-                data[node] = data[parent];
-                data[parent] = dataTemp;          // Swap the nodes
-                node = parent;                    // Move up the heap (update node to parent)
-                parent = Parent(node);            // Recalculate parent
-            }
-            else {
-                break;  // Exit the loop if the heap property is satisfied
-            }
-        }
-    }
-    else {
-		// If the parent priority is higher, fix the heap from the node downwards.
-        FixHeap(node);
-    }
-}
 

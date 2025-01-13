@@ -2,15 +2,16 @@
 #include <iostream>
 #include <iomanip>  // For std::fixed and std::setprecision
 
-// Destructor to free memory allocated for the list
-MyList::~MyList() {
-    Node* current = head;
+MyList::MyList(const MyList& other) : head(nullptr) {
+
+    Node* current = other.head;
     while (current != nullptr) {
-        Node* nextNode = current->next;
-        delete current;
-        current = nextNode;
+        append(current->data);
+        current = current->next;
     }
 }
+// Destructor to free memory allocated for the list
+MyList::~MyList() {clear();}
 
 // Append a value to the end of the list
 void MyList::append(float value) {
@@ -47,4 +48,33 @@ void MyList::print() const {
 		if (current != nullptr) {std::cout << ", ";}
     }
 	std::cout << std::endl;
+}
+
+void MyList::clear()
+{
+        Node* current = head;
+        while (current != nullptr) {
+            Node* nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
+        head = nullptr;
+    
+}
+
+MyList& MyList::operator=(const MyList & other) {
+    // Check for self-assignment
+    if (this == &other) {
+        return *this;  
+    }
+
+    clear();
+
+    
+    Node* current = other.head;
+    while (current != nullptr) {
+        append(current->data); // Append data from the other list
+        current = current->next;
+    }
+    return *this;  
 }

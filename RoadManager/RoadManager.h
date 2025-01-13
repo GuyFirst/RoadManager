@@ -9,15 +9,15 @@ struct Road  // Define Road consistently as a struct
     unsigned int subPriority_numOfBridges = 0;  // If needed, sort by minimum
     MyList bridges;                            // List of bridges
     bool haveBridges = false;
-    Road* pRoad;
+    Road* pRoad = nullptr;
+
 };
 
 class RoadManager
 {
     Heap heapRoads;
     Road* arrRoads; // Array of Roads
-    int roadCount;  // Number of roads
-
+	int roadNumber;
 public:
     RoadManager(int roadNumber); // Constructor
     ~RoadManager() { delete[] arrRoads; }            // Destructor
