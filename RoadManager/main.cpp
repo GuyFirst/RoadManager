@@ -13,19 +13,19 @@ int main() {
 		return 0;
 	}
 	RoadManager roadSystem(m);
-
+	bool a = false;
     for (int i = 0; i < n; ++i) {
         char op;
         std::cin >> op;
 
         if (op == 'a') {
-            ;
+           a = true ;
         }
         else if (op == 'b') {
             float h;
             int r;
             std::cin >> h >> r;
-			if ((r > 1 && r <= m) && h > 0)
+			if (r >= 1 && r <= m && h > 0 && a)
 			      roadSystem.AddBridge(h, r-1);
             else {
                 std::cout << "invalid input" << std::endl;
