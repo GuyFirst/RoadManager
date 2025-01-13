@@ -18,5 +18,5 @@ public:
     ~Heap();
     Road Max();
     void FixHeap(int node);
-
+	void print() const;
 };

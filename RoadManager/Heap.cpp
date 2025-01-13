@@ -1,14 +1,14 @@
 #include "Heap.h"
 #include <algorithm>
 #include "RoadManager.h"
-
+#include <iostream>
 
 // Constructor: allocate memory for the heap and make the heap empty.
 Heap::Heap(int roadNumber)
 {
     data = new Road[roadNumber];
     maxSize = roadNumber;
-    heapSize = 0;
+    heapSize = roadNumber;
     allocated = 1;
 }
 
@@ -43,18 +43,17 @@ int Heap::Right(int node)
 }
 
 
-void Heap::FixHeap(int node) // Fixes the heap that has node as root.
+void Heap::FixHeap(int node) // Fixes the heap that has node
 {
     int max;
     int left = Left(node);
     int right = Right(node);
 
-	Road dataTemp;
 
     if (left < heapSize) {
 
-        if (((data[left].priority_minRoadHeight > data[node].priority_minRoadHeight) ||      //left node has higher priority
-            (data[left].priority_minRoadHeight == data[node].priority_minRoadHeight &&
+        if (((data[left].priority_minBridgeHeight > data[node].priority_minBridgeHeight) ||      //left node has higher priority
+            (data[left].priority_minBridgeHeight == data[node].priority_minBridgeHeight &&
                 data[left].subPriority_numOfBridges < data[node].subPriority_numOfBridges)) &&  //left node has equal priority but higher subpriority
             data[left].haveBridges) {                                                       //left have bridges
             max = left;
@@ -65,8 +64,8 @@ void Heap::FixHeap(int node) // Fixes the heap that has node as root.
 
     if (right < heapSize) {
 
-        if (((data[right].priority_minRoadHeight > data[max].priority_minRoadHeight) ||       //right node has higher priority
-            (data[right].priority_minRoadHeight == data[max].priority_minRoadHeight &&
+        if (((data[right].priority_minBridgeHeight > data[max].priority_minBridgeHeight) ||       //right node has higher priority
+            (data[right].priority_minBridgeHeight == data[max].priority_minBridgeHeight &&
                 data[right].subPriority_numOfBridges < data[max].subPriority_numOfBridges)) &&  //right node has equal priority but higher subpriority
             data[right].haveBridges) { 					                                  //right have bridges
             max = right;
@@ -78,6 +77,14 @@ void Heap::FixHeap(int node) // Fixes the heap that has node as root.
     if (max != node) {
 		std::swap(data[node], data[max]);
 		FixHeap(max);
+    }
+}
+
+void Heap::print() const
+{
+	std::cout << "the max: " << this->data[0].roadNumber << std::endl;
+    for (int i = 0; i < heapSize; i++) {
+        std::cout << "roadnumber: " << data[i].roadNumber << " minBridgeHeight: " << data[i].priority_minBridgeHeight << " subPrority numOfbridges: " << data[i].subPriority_numOfBridges << std::endl;
     }
 }
 
